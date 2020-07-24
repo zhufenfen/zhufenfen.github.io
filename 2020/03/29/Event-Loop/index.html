@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="zhufenfen taiben">
+    <meta name="keyword" content="">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
+    <link rel="alternate" type="application/atom+xml" title="zhufen" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        Event Loop学习笔记｜zhufen&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://yoursite.com/2020/03/29/Event-Loop/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+
+    <!-- Custom CSS -->
+    
+<link rel="stylesheet" href="/css/blog-style.css">
+
+
+    <!-- Pygments Github CSS -->
+    
+<link rel="stylesheet" href="/css/syntax.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    zhufen
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>Event Loop学习笔记</h1>
+                    
+                    <span class="meta">
+                         作者 zhufenfen
+                        <span>
+                          日期 2020-03-29
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            Event Loop学习笔记
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <p>Event Loop是计算机系统的一种运行机制。想要理解Event Loop，就要从程序的运行模式讲起，运行以后的程序叫做<a href="https://zh.wikipedia.org/wiki/%E8%A1%8C%E7%A8%8B" target="_blank" rel="noopener">进程</a>。一般情况下，一个进程只能执行一个任务，如果有很多任务需要执行，有三种解决方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">（1）排队</span><br><span class="line">（2）新建进程</span><br><span class="line">（3）新建线程：进程太耗资源，一个进程包含多个线程，由线程去执行任务</span><br></pre></td></tr></table></figure>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><h3 id="为什么javascript是单线程"><a href="#为什么javascript是单线程" class="headerlink" title="为什么javascript是单线程"></a>为什么javascript是单线程</h3><p>javascript的单线程，与它的用途有关。作为浏览器脚本语言，javascript的主要用途是和用户互动操作dom，由于多线程可能会修改彼此运行的结果，所以为了避免复杂性，javascript从诞生起就是单线程（HTML5提出的Web Worker，允许创建多个线程，但子线程受主线程控制且不得操作dom，所以并未改变javascript单线程的本质）</p>
+<h3 id="任务队列"><a href="#任务队列" class="headerlink" title="任务队列"></a>任务队列</h3><p>单线程就意味着，所有任务都需要排队，前一个任务结束才会执行后一个任务。如果排队是因为计算量大，CPU忙不过来倒也算了，但因为IO设备（输入输出慢）排队的话就有些过分了。javascript的设计者于是将任务分为<strong>同步任务</strong>（主线程上的任务）和<strong>异步任务</strong>（任务队列的任务，主线程上的任务执行完毕就会读取任务队列）</p>
+<h3 id="事件和回调函数"><a href="#事件和回调函数" class="headerlink" title="事件和回调函数"></a>事件和回调函数</h3><p>任务队列就是一个事件的队列（IO设备的事件、用户操作产生的事件、定时事件等）。IO设备完成一个任务，就在“任务队列”添加一个事件。执行事件就是执行对应的回调函数（被主线程挂起来的代码）。某些事件只有到了规定的时间，才能返回主线程。</p>
+<h3 id="Event-Loop"><a href="#Event-Loop" class="headerlink" title="Event Loop"></a>Event Loop</h3><p>主线程从“任务队列”读取事件，这个过程是循环不断的，所以又称<strong>事件循环</strong>。<br><img src="/images/event_loop.jpg" alt=""><br>主线程运行的时候，产生各种堆和栈，栈中的代码调用各种外部API，它们在“任务队列”中加入各种事件。只要栈中的代码执行完毕，主线程就会去读取“任务队列”，依次执行那些事件所对应的回调函数。</p>
+<h3 id="Node-js的Event-Loop"><a href="#Node-js的Event-Loop" class="headerlink" title="Node.js的Event Loop"></a>Node.js的Event Loop</h3><p><img src="/images/event_loop2.jpg" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">（1）V8引擎解析javascript代码</span><br><span class="line">（2）解析后的代码调用Node API</span><br><span class="line">（3）libux库负责Node API的执行。它将不同的任务分配给不同的线程，形成一个Event Loop，以异步的方式将任务的执行结果返回给V8引擎</span><br><span class="line">（4）V8引擎再将结果返回给用户</span><br></pre></td></tr></table></figure>
+<p>Node.js提供了另外两个与任务队列有关的方法：process.nextTick在当前执行栈的尾部触发回调，setImmediate在任务队列的尾部添加事件。所以nextTick执行效率更高（因为不用读取任务队列）<br><strong>setTimeout对比setImmediate</strong>：如果都在主模块调用，先后顺序取决于进程性能。如果在I/O队列调用，则setImmediate的回调先执行，因为会先到check队列。</p>
+<h2 id="Event-Loop-1"><a href="#Event-Loop-1" class="headerlink" title="Event Loop"></a>Event Loop</h2><p>分浏览器和NodeJS的Event Loop。浏览器是先微后宏（执行一个宏任务就读取微队列），Nodejs分为四个宏任务队列和2个微任务队列（执行一个宏任务队列就读取微队列）<br><img src="/images/event_loop3.jpg" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">微队列（microtask）</span><br><span class="line">  Promise</span><br><span class="line">  process.nextTick(Node独有)</span><br><span class="line">  MutationObserver</span><br><span class="line">  Object.observe</span><br><span class="line">宏队列（macrotask）</span><br><span class="line">  setTimeout、setInterval、setImmediate(Node独有)</span><br><span class="line">  requestAnimationFrame(浏览器独有)</span><br><span class="line">  UI rendering(浏览器独有)</span><br><span class="line">  I&#x2F;O</span><br></pre></td></tr></table></figure>
+
+<p>参考链接：<br><a href="http://www.ruanyifeng.com/blog/2014/10/event-loop.html" target="_blank" rel="noopener">JavaScript 运行机制详解：再谈Event Loop</a><br><a href="https://juejin.im/post/5b8f76675188255c7c653811#heading-4" target="_blank" rel="noopener">带你彻底弄懂Event Loop</a></p>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2020/04/25/Swr/" data-toggle="tooltip" data-placement="top"
+                           title="Swr">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                </ul>
+
+                
+
+                
+
+
+                <!--加入新的评论系统-->
+                
+
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么javascript是单线程"><span class="toc-text">为什么javascript是单线程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#任务队列"><span class="toc-text">任务队列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#事件和回调函数"><span class="toc-text">事件和回调函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Event-Loop"><span class="toc-text">Event Loop</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Node-js的Event-Loop"><span class="toc-text">Node.js的Event Loop</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Event-Loop-1"><span class="toc-text">Event Loop</span></a></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/zhufenfen">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; zhufen 2020
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/" target="_blank" rel="noopener">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+
+<script src="/js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="/js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="/js/blog.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://yoursite.com/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','','2.0.0');
+</script>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="https://static.smxs.com/uploads/allimg/181017/15-1Q01G14Q9222.jpg">
+</body>
+
+</html>
