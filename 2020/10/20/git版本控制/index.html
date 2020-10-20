@@ -18,11 +18,11 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-        木桶布局｜zhufen&#39;s blog
+        git版本控制｜zhufen&#39;s blog
         
     </title>
 
-    <link rel="canonical" href="http://yoursite.com/2020/08/28/木桶布局/">
+    <link rel="canonical" href="http://yoursite.com/2020/10/20/git版本控制/">
 
     <!-- Bootstrap Core CSS -->
     
@@ -145,12 +145,12 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
                 <div class="post-heading">
-                    <h1>木桶布局</h1>
+                    <h1>git版本控制</h1>
                     
                     <span class="meta">
                          作者 zhufenfen
                         <span>
-                          日期 2020-08-28
+                          日期 2020-10-20
                          </span>
                     </span>
                     <div class="tags text-center">
@@ -162,7 +162,7 @@
     </div>
     <div class="post-title-haojen">
         <span>
-            木桶布局
+            git版本控制
         </span>
     </div>
 </header>
@@ -173,35 +173,32 @@
         <div class="row">
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <p>电脑进水，博客丢了。现在它又回来啦，经过上次意外事件，决定搞两个分支嘿嘿嘿！真棒，又可以开心的写写写了。</p>
-<h3 id="木桶布局"><a href="#木桶布局" class="headerlink" title="木桶布局"></a>木桶布局</h3><p>此篇博客的主题是木桶布局，提起布局二字大家脑海第一时间蹦出来的我猜大概也许是 css 里的布局方案。例如，固定布局响应布局弹性布局表格布局圣杯布局双飞翼布局，而木桶布局仅仅用 CSS 是实现不了的。下面先解释一下什么叫木桶布局，关键字木桶，这是一个形象类比，因为它和木桶一样，不在乎你放多少块木头，以及不同圈的木头高度是否一致，只要每圈都把桶围成同样宽度。来一张木桶大图亮亮眼：<br><img src="/images/barrel1.jpeg" alt=""><br>我们经常在网站会看到像木桶这样的布局，最常见的百度图片<br><img src="/images/barrel2.jpeg" alt=""><br>图虫<br><img src="/images/barrel3.jpg" alt=""><br>500px<br><img src="/images/barrel4.jpg" alt=""><br>可以看出它们每一行宽度一定，高度是不是看起来也差不多呀，给人一种整齐美观的感觉。那如何实现这样的布局呢？在不改变图片本身长宽比情况下，保证每行宽度一样，高度尽可能接近，也就是说只能等比放大或缩小图片。它有几个鲜明的特点：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">每行图片宽度一样</span><br><span class="line">每行图片高度尽可能接近</span><br></pre></td></tr></table></figure>
-
-<p>抽象出来是这个样子，<br><img src="/images/barrel5.jpeg" alt=""><br>可以思考下这样的布局如何实现哈，其实最终实现不难，重要的是思考的过程。就比如有两百张大小不定的图片，如何设计才能让每行宽度一样，高度接近呢。先捋一下思路～</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">需要先拥有一些图片</span><br><span class="line">由于每行高度是事先设定的，所以我们在把图片放入每一行时，需先调整图片大小，使得图片高度与行容器高度一致</span><br><span class="line">依次往行容器放置等比例大小调整过的图片，1⃣️号图片，2号图片，，，一直到5号图片发现它放不下了，这时候要么把5号图片硬塞进当前行，要么放下一行。不管是硬塞进当前行还是放下一行都得重新调整图片高度，使得能刚好占满一行。至于是硬塞还是放下一行就得比较调整后的行容器高度，看哪个最接近之前设定的行容器高度，然后再选择是硬塞还是放下一行</span><br><span class="line">重复上述步骤，直至图片摆放完毕</span><br></pre></td></tr></table></figure>
-
-<h3 id="具体步骤"><a href="#具体步骤" class="headerlink" title="具体步骤"></a>具体步骤</h3><p>一、HTML 结构：固定宽度的父容器，若干个用来盛放图片的行容器<br>二、接下来就是木桶布局实现的重中之重部分，可以将实现过程分解成一个个方法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">拥有素材图片：getImgUrls方法来获取图片链接，通过http:&#x2F;&#x2F;via.placeholder.com&#x2F;widthxheight&#x2F;bgColor&#x2F;textColor 随机生成图片</span><br><span class="line">加载图片信息：getImgInfo用来获取图片信息，并将高度初步调整成设定的行容器高度</span><br><span class="line">渲染图片队列：renderImg用来计算每行可以放置的图片信息</span><br><span class="line">放置图片位置：layout将重新调整大小的图片放到行容器里再apend到父容器节点上</span><br></pre></td></tr></table></figure>
-
-<h3 id="方法实现"><a href="#方法实现" class="headerlink" title="方法实现"></a>方法实现</h3><p>一、getImgUrls：可以访问该网站获取占位图片，<a href="http://via.placeholder.com/widthxheight/bgColor/textColor" target="_blank" rel="noopener">网站地址</a>，width、height、bgcolor、textColor 可以随机生成。这里添加一个参数 imgNum 表示图片数量，最后返回包含这些图片链接的一个数组<br><img src="/images/barrel6.jpg" alt=""><br>二、getImgInfo：new Image()获取图片信息，将高度初步调整成设定的行容器高度，并将图片信息存储起来，等之后渲染图片队列和放置图片位置时会用到。<br><img src="/images/barrel7.jpg" alt=""><br>三、renderImg：用来计算每行可以放置的图片信息，当加入图片宽度大于父容器宽度，将最后一张图片硬塞还是放下一行就得比较调整后的行容器高度 看哪个最接近之前设定的行容器高度，然后再选择是硬塞还是放下一行。<br><img src="/images/barrel10.png" alt=""><br><img src="/images/barrel8.jpg" alt=""><br>四、layout：将重新调整大小的图片放到行容器里再 apend 到父容器节点上<br><img src="/images/barrel9.jpg" alt=""><br>实际项目应用场景远比基本效果 demo 更复杂，主要考虑以下情况：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">图片从服务器通过接口异步获取</span><br><span class="line">要结合懒加载实现滚动加载更多图片</span><br><span class="line">当屏幕尺寸发生变化时需要重新布局</span><br></pre></td></tr></table></figure>
-
-<p>感兴趣的话可深究！</p>
+                <p>毛世玉小哥的git命令用的很6，于是我在此记下他在我电脑上操作的命令。<br>将多次提交合并成一次</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git status</span><br><span class="line">git log</span><br><span class="line">git reset --soft HEAD~5回退版本，不清空暂存区</span><br><span class="line">git commit -m &quot;多次提交合并成一次&quot;</span><br><span class="line">git push -f（然后远程上的5次提交都会被覆盖）</span><br></pre></td></tr></table></figure>
+<p>哇塞，又看见世玉6的不行的git操作啦。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git pull出错</span><br><span class="line">git reset --hard    git clean -dff</span><br></pre></td></tr></table></figure>
+<p>于是我赶紧趁着工作闲暇时跟着廖雪峰学学git，以下是我学git记录的知识点。</p>
+<h3 id="git是什么"><a href="#git是什么" class="headerlink" title="git是什么"></a>git是什么</h3><p>git是Linus团队用C语言编写的分布式管理控制系统，工作过程不用联网，具有强大的分支管理功能</p>
+<h3 id="git简单命令"><a href="#git简单命令" class="headerlink" title="git简单命令"></a>git简单命令</h3><p>在平台上安装git后需进行身份配置，配置信息在C:\Users\Administrator.gitconfig中<br>git config –global user.name “your name”<br>git config –global user.email “<a href="mailto:email@example.com">email@example.com</a>“<br>–global表示在这台电脑的所有git仓库都能用<br><strong>配置别名</strong><br>git config –global alias.lg “log –graph –pretty=one –abbrev-commit”<br>git config –global alias.mg “merge –no-ff -m”<br>git config –global alias.st status<br>创建空目录 mkdir learngit  cd learngit pwd(显示当前目录)<br>git init初始化项目仓库，会多了.git目录（用来跟踪管理版本库）ls -ah可查看隐藏目录<br>git add .添加文件到暂存区<br>git commit -m <message>提交到版本库<br>git status查看工作区状态<br>git diff查看修改内容</p>
+<p><strong>版本回退</strong><br>git log查看提交日志<br>git log –pretty=oneline –graph –abbrev-commit单行显示、查看分支合并情况、提交码缩略<br>git log -1显示最后一条commit信息<br>git reflog查看命令历史，可用来回溯到未来版本<br>HEAD表示当前版本    HEAD^表示上一个版本 HEAD^^表示上上一个版本 HEAD~5往上5个版本<br>git reset –hard commitId前n(&gt;=5)位   (修改HEAD指针)<br>git checkout – file丢弃工作区修改（版本库替换工作区）<br>git reset HEAD <file>暂存区重新放回工作区<br><strong>删除文件</strong><br>要删除的文件已经在版本库中存在<br>git rm/add <file><br>git commit -m “file从版本库中删除”<br>或者恢复误删文件git checkout –file<br><strong>远程仓库</strong><br>github支持SSH协议，只要知道了你的公钥，就能确保只有你自己才能推送<br>在自己的电脑上创建SSH Key   ssh-keygen -t rsa -C “your email”<br>将用户主目录C:\Users\Administrator.ssh下生成的id_rsa.pub公钥添加到github上去<br>先有本地库，后有远程库</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">github上新建仓库，然后将远程仓库和本地关联</span><br><span class="line">git remote add origin git@github.com:zhufenfen&#x2F;repo-name.git关联远程仓库</span><br><span class="line">git remote rm origin解除关联</span><br><span class="line">git push -u origin master或者git push --set-upstream origin master本地仓库内容推送到远程仓库</span><br><span class="line">git push origin branchname将新分支推送到github</span><br><span class="line">git push origin :branchname删除远程分支</span><br><span class="line">git remote -v查看远程库信息</span><br></pre></td></tr></table></figure>
+<p>先有远程库，后有本地库</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone git@github.com:zhufenfen&#x2F;repo-name.git</span><br></pre></td></tr></table></figure>
+<p><strong>分支管理</strong><br>master分支非常稳定，仅用来发布版本，平时都在dev上干活，每个人都有自己的分支，往dev上合并就可以了。<br>git branch <name>创建分支<br>git checkout <name>切换分支<br>git checkout -b <name>创建并切换分支<br>git checkout -b <name> origin/<name>在本地创建和远程分支对应的分支<br>git branch查看分支  git branch -a查看本地分支和远程分支  git branch -r查看远程分支<br>git merge <name>合并分支<br>git branch -d <name>删除分支，D表示强制删除分支<br>合并分支的时候，有冲突先解决冲突，然后git commit -am “conflict”<br>fast forward模式</p>
+<p>不采用fast forward模式时，git merge –no-ff -m “merge with no-ff” dev</p>
+<p>add merge为dev分支提交信息，merge with no-ff为主分支提交信息<br>with fast-forward为dev2分支提交信息</p>
+<p>可以看出当删除dev和dev2分支后，合并时采用fast-forward的分支信息丢失</p>
+<p>bug分支<br>修复bug时会创建新的bug分支进行修复，修复完成后合并删除<br>git stash工作区内容储存一下，可多次stash，然后恢复指定stash git stash apply stash@{0}<br>git stash list查看储存内容<br>git stash apply    git stash drop<br>git stash pop恢复工作区内容+删除stash内容<br>feature分支<br>开发一个新功能，最好新建一个分支<br>多人协作<br>git pull，如果提示no tracking information说明本地分支和远程分支没有建立关联<br>用命令git branch –set-upstream-to=origin/<branch> dev建立关联<br>如果有冲突先解决冲突，最后git push origin <branch-name><br>git rebase可以将本地未push的分叉提交历史整理成直线<br>标签管理<br>标签是commitid的别名<br>git tag <tagname> &lt;commitid(默认HEAD)&gt;新建一个标签<br>git tag -a <tagname> -m <message>指定标签信息<br>git tag查看所有标签<br>git show <tagname><br>git tag -d <tagname>删除本地标签<br>git push origin :refs/tags/<tagname>删除远程标签<br>git push origin <tagname>推送某个标签<br>git push origin –tags推送所有标签<br>github<br>可以任意Fork开源项目，自己拥有Fork后的仓库的读写权限，可以在自己的仓库pull request给官方仓库来贡献代码<br>忽略某些文件时，需要将.gitignore添加到版本库<br>git add -f <file>强制添加<br>git check-ignore -v <file>检查规则<br>搭建git服务器<br>需要一个Linux平台<br>gitosis更方便管理公钥<br>gitolite用于权限控制</p>
 
                 <hr>
                 
 
                 <ul class="pager">
                     
-                    <li class="previous">
-                        <a href="/2020/10/20/git版本控制/" data-toggle="tooltip" data-placement="top"
-                           title="git版本控制">&larr; Previous Post</a>
-                    </li>
-                    
                     
                     <li class="next">
-                        <a href="/2020/05/19/如何使用React-Hooks重构HOC组件/" data-toggle="tooltip" data-placement="top"
-                           title="如何使用React Hooks重构HOC组件">Next Post &rarr;</a>
+                        <a href="/2020/08/28/木桶布局/" data-toggle="tooltip" data-placement="top"
+                           title="木桶布局">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -220,7 +217,7 @@
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#木桶布局"><span class="toc-text">木桶布局</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#具体步骤"><span class="toc-text">具体步骤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#方法实现"><span class="toc-text">方法实现</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#git是什么"><span class="toc-text">git是什么</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#git简单命令"><span class="toc-text">git简单命令</span></a></li></ol>
                 </div>
             </div>
         </div>
