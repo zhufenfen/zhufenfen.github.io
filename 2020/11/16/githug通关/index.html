@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="zhufenfen taiben">
+    <meta name="keyword" content="">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
+    <link rel="alternate" type="application/atom+xml" title="zhufen" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        githug通关｜zhufen&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://yoursite.com/2020/11/16/githug通关/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+
+    <!-- Custom CSS -->
+    
+<link rel="stylesheet" href="/css/blog-style.css">
+
+
+    <!-- Pygments Github CSS -->
+    
+<link rel="stylesheet" href="/css/syntax.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    zhufen
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>githug通关</h1>
+                    
+                    <span class="meta">
+                         作者 zhufenfen
+                        <span>
+                          日期 2020-11-16
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            githug通关
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <p>公司新来了一个和我同姓的棒棒后端咖～举办了两次关于 git 的技术分享，为了巩固提高还布置了作业，作业链接在此：<a href="https://github.com/Gazler/githug" target="_blank" rel="noopener">Githug</a>。我照着通关攻略不紧不慢的通了关并将此安利给了我只会 add commit push 的小男友）偷笑。唉，下午竟然还有考试呢，中午 HR 让我们临阵磨枪，我脑子里都是：临阵磨枪，再快也慌～ 那就温习下 githug ～～～～一个学习 git 的小游戏吧！</p>
+<h2 id="Githug-安装和使用方法"><a href="#Githug-安装和使用方法" class="headerlink" title="Githug 安装和使用方法"></a>Githug 安装和使用方法</h2><p>先将 github 上的 githug 项目 clone 到本地，安装好 ruby 的运行环境，接着 gem install githug，输入 githug 创建新目录，cd git_hug 切换到 git_hug 目录下开始闯关<br><strong>闯关内部命令</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">githug play：验证是否通过此次关卡，可省略play</span><br><span class="line">githug hint：寻求提示，help、help、help、</span><br><span class="line">githug reset：重置本次关卡，推倒重来～</span><br><span class="line">githug levels：查看各自名称</span><br></pre></td></tr></table></figure>
+
+<h2 id="通关咯"><a href="#通关咯" class="headerlink" title="通关咯"></a>通关咯</h2><h4 id="第-1-关-init"><a href="#第-1-关-init" class="headerlink" title="第 1 关 init"></a>第 1 关 init</h4><p><img src="/images/githug1.jpg" alt=""><br>命令：git init</p>
+<h4 id="第-2-关-config"><a href="#第-2-关-config" class="headerlink" title="第 2 关 config"></a>第 2 关 config</h4><p><img src="/images/githug2.jpg" alt=""><br>命令：git config –add (–local/–global) user.name/user.email</p>
+<h4 id="第-3-关-add"><a href="#第-3-关-add" class="headerlink" title="第 3 关 add"></a>第 3 关 add</h4><p><img src="/images/githug3.jpg" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git add 文件名</span><br><span class="line">git add *.md    扩展名为md的文件都添加到暂存区</span><br><span class="line">git add .&#x2F;-A    工作区文件都添加到暂存区</span><br></pre></td></tr></table></figure>
+
+<h4 id="第-4-关-commit"><a href="#第-4-关-commit" class="headerlink" title="第 4 关 commit"></a>第 4 关 commit</h4><p><img src="/images/githug4.jpg" alt=""><br>命令：git commit -m “my commit message”</p>
+<h4 id="第-5-关-clone"><a href="#第-5-关-clone" class="headerlink" title="第 5 关 clone"></a>第 5 关 clone</h4><p><img src="/images/githug5.jpg" alt=""><br>命令：git clone 远程仓库地址</p>
+<h4 id="第-6-关-clone-to-folder"><a href="#第-6-关-clone-to-folder" class="headerlink" title="第 6 关 clone to folder"></a>第 6 关 clone to folder</h4><p><img src="/images/githug6.jpg" alt=""><br>命令：git clone 远程仓库地址 自定义目录名</p>
+<h4 id="第-7-关-ignore"><a href="#第-7-关-ignore" class="headerlink" title="第 7 关 ignore"></a>第 7 关 ignore</h4><p><img src="/images/githug7.jpg" alt=""><br>命令：vim .gitignore、i、输入*.swap、esc、:wq、</p>
+<h4 id="第-8-关-include"><a href="#第-8-关-include" class="headerlink" title="第 8 关 include"></a>第 8 关 include</h4><p><img src="/images/githug8.jpg" alt=""><br>命令：vim .gitignore、i、输入*.a、回车、输入!lib.a、esc、:wq</p>
+<h4 id="第-9-关-status"><a href="#第-9-关-status" class="headerlink" title="第 9 关 status"></a>第 9 关 status</h4><p><img src="/images/githug9.jpg" alt=""><br>命令：git status (-s)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">untracked：新建的工作区文件</span><br><span class="line">modified：修改的工作区文件</span><br><span class="line">staged：暂存区文件</span><br></pre></td></tr></table></figure>
+
+<h4 id="第-10-关-number-of-files-committed"><a href="#第-10-关-number-of-files-committed" class="headerlink" title="第 10 关 number_of_files_committed"></a>第 10 关 number_of_files_committed</h4><p><img src="/images/githug10.jpg" alt=""><br>命令：同上</p>
+<h4 id="第-11-关-rm"><a href="#第-11-关-rm" class="headerlink" title="第 11 关 rm"></a>第 11 关 rm</h4><p><img src="/images/githug11.jpg" alt=""><br>命令：git rm 文件名 删除远程仓库文件</p>
+<h4 id="第-12-关-rm-cached"><a href="#第-12-关-rm-cached" class="headerlink" title="第 12 关 rm_cached"></a>第 12 关 rm_cached</h4><p><img src="/images/githug12.jpg" alt=""><br>命令：git rm –cached 暂存区文件 撤销暂存区文件到工作区</p>
+<h4 id="第-13-关-stash"><a href="#第-13-关-stash" class="headerlink" title="第 13 关 stash"></a>第 13 关 stash</h4><p><img src="/images/githug13.jpg" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git stash</span><br><span class="line">git stash list</span><br><span class="line">git stash pop</span><br></pre></td></tr></table></figure>
+
+<h4 id="第-14-关-rename"><a href="#第-14-关-rename" class="headerlink" title="第 14 关 rename"></a>第 14 关 rename</h4><p><img src="/images/githug14.jpg" alt=""><br>命令：git mv 旧文件名 新文件名</p>
+<h4 id="第-15-关-restructure"><a href="#第-15-关-restructure" class="headerlink" title="第 15 关 restructure"></a>第 15 关 restructure</h4><p><img src="/images/githug15.jpg" alt=""><br>命令：mkdir src、git mv *.html ./src/</p>
+<h4 id="第-16-关-log"><a href="#第-16-关-log" class="headerlink" title="第 16 关 log"></a>第 16 关 log</h4><p><img src="/images/githug16.jpg" alt=""><br>命令：git log –pretty=oneline</p>
+<h4 id="第-17-关-tag"><a href="#第-17-关-tag" class="headerlink" title="第 17 关 tag"></a>第 17 关 tag</h4><p><img src="/images/githug.jpg" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git tag my-tag：给最近一次commit打tag</span><br><span class="line">git tag my-tag hash：给指定commit打tag</span><br><span class="line">git tag：查看所有tag</span><br><span class="line">git tag -d my-tag：删除指定tag</span><br></pre></td></tr></table></figure>
+
+<h4 id="第-18-关-push-tags"><a href="#第-18-关-push-tags" class="headerlink" title="第 18 关 push_tags"></a>第 18 关 push_tags</h4><p><img src="/images/githug18.jpg" alt=""><br>命令：git push –tags</p>
+<h4 id="第-19-关-commit-amend"><a href="#第-19-关-commit-amend" class="headerlink" title="第 19 关 commit_amend"></a>第 19 关 commit_amend</h4><p><img src="/images/githug19.jpg" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">先add</span><br><span class="line">git commit --amend -m &quot;new message&quot;：替换原有的commit说明</span><br><span class="line">git commit --amend -C HEAD：使用最近一次的commit 说明</span><br><span class="line">git commit --amend：自行编辑提交说明</span><br></pre></td></tr></table></figure>
+
+<h4 id="第-20-关-commit-in-future"><a href="#第-20-关-commit-in-future" class="headerlink" title="第 20 关 commit_in_future"></a>第 20 关 commit_in_future</h4><p><img src="/images/githug20.jpg" alt=""><br>命令：git commit –date=”具体日期/10 minutes ago/last friday/noon yesterday” -m “commit message”</p>
+<h4 id="第-21-关-reset"><a href="#第-21-关-reset" class="headerlink" title="第 21 关 reset"></a>第 21 关 reset</h4><p><img src="/images/githug21.jpg" alt=""><br>命令：git reset 文件名</p>
+<h4 id="第-22-关-reset-soft"><a href="#第-22-关-reset-soft" class="headerlink" title="第 22 关 reset soft"></a>第 22 关 reset soft</h4><p><img src="/images/githug22.jpg" alt=""><br>命令：git reset –soft HEAD^：撤销最后一次 commit 到暂存区</p>
+<h4 id="第-23-关-checkout-file"><a href="#第-23-关-checkout-file" class="headerlink" title="第 23 关 checkout file"></a>第 23 关 checkout file</h4><p><img src="/images/githug23.jpg" alt=""><br>命令：git checkout 文件名：放弃工作区的某个文件</p>
+<h4 id="第-24-关-remote"><a href="#第-24-关-remote" class="headerlink" title="第 24 关 remote"></a>第 24 关 remote</h4><p><img src="/images/githug24.jpg" alt=""><br>命令：git remote：查询连接了哪些远程仓库</p>
+<h4 id="第-25-关-remote-url"><a href="#第-25-关-remote-url" class="headerlink" title="第 25 关 remote_url"></a>第 25 关 remote_url</h4><p><img src="/images/githug25.jpg" alt=""><br>命令：git remote -v：查询远程仓库地址（包含 fetch 和 push）</p>
+<h4 id="第-26-关-pull"><a href="#第-26-关-pull" class="headerlink" title="第 26 关 pull"></a>第 26 关 pull</h4><p><img src="/images/githug26.jpg" alt=""><br>命令：git pull remote-name branch-name</p>
+<h4 id="第-27-关-remote-add"><a href="#第-27-关-remote-add" class="headerlink" title="第 27 关 remote_add"></a>第 27 关 remote_add</h4><p><img src="/images/githug27.jpg" alt=""><br>命令：git remote add remote-name remote-url</p>
+<h4 id="第-28-关-push"><a href="#第-28-关-push" class="headerlink" title="第 28 关 push"></a>第 28 关 push</h4><p><img src="/images/githug28.jpg" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git push remote-name branch-name</span><br><span class="line">git push -u remote-name branch-name（记住仓库名和分支名）</span><br><span class="line">git push（记住之后下次直接可以输入此命令）</span><br></pre></td></tr></table></figure>
+
+<p>命令：git rebase 本地 commit 会排在远程 commit 之后</p>
+<h4 id="第-29-关-diff"><a href="#第-29-关-diff" class="headerlink" title="第 29 关 diff"></a>第 29 关 diff</h4><p><img src="/images/githug29.jpg" alt=""><br>命令：git diff (文件名)</p>
+<h4 id="第-30-关-blame"><a href="#第-30-关-blame" class="headerlink" title="第 30 关 blame"></a>第 30 关 blame</h4><p><img src="/images/githug30.jpg" alt=""><br>命令：git blame 文件名 会列出每一行的 hash 值、作者、时间</p>
+<h4 id="第-31-关-branch"><a href="#第-31-关-branch" class="headerlink" title="第 31 关 branch"></a>第 31 关 branch</h4><p><img src="/images/githug31.jpg" alt=""><br>命令：git branch branch-name</p>
+<h4 id="第-32-关-checkout"><a href="#第-32-关-checkout" class="headerlink" title="第 32 关 checkout"></a>第 32 关 checkout</h4><p><img src="/images/githug32.jpg" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git checkout branch-name：切换分支</span><br><span class="line">git checkout -b branch-name：创建并切换分支</span><br><span class="line">git chekcout -：切换到上个分支</span><br></pre></td></tr></table></figure>
+
+<h4 id="第-33-关-checkout-tag"><a href="#第-33-关-checkout-tag" class="headerlink" title="第 33 关 checkout_tag"></a>第 33 关 checkout_tag</h4><p><img src="/images/githug33.jpg" alt=""><br>命令：git checkout tag-name</p>
+<h4 id="第-34-关-checkout-tag-over-branch"><a href="#第-34-关-checkout-tag-over-branch" class="headerlink" title="第 34 关 checkout_tag_over_branch"></a>第 34 关 checkout_tag_over_branch</h4><p><img src="/images/githug34.jpg" alt=""><br>命令：git checkout tags/tag-name</p>
+<h4 id="第-35-关-branch-at"><a href="#第-35-关-branch-at" class="headerlink" title="第 35 关 branch_at"></a>第 35 关 branch_at</h4><p><img src="/images/githug35.jpg" alt=""><br>命令：git branch branch-name hash-code</p>
+<h4 id="第-36-关-delete-branch"><a href="#第-36-关-delete-branch" class="headerlink" title="第 36 关 delete_branch"></a>第 36 关 delete_branch</h4><p><img src="/images/githug36.jpg" alt=""><br>命令：git branch -d branch-name</p>
+<h4 id="第-37-关-push-branch"><a href="#第-37-关-push-branch" class="headerlink" title="第 37 关 push_branch"></a>第 37 关 push_branch</h4><p><img src="/images/githug37.jpg" alt=""><br>命令：git push remote-name branch-name</p>
+<h4 id="第-38-关-merge"><a href="#第-38-关-merge" class="headerlink" title="第 38 关 merge"></a>第 38 关 merge</h4><p><img src="/images/githug38.jpg" alt=""><br>命令：git merge branch-name</p>
+<h4 id="第-39-关-fetch"><a href="#第-39-关-fetch" class="headerlink" title="第 39 关 fetch"></a>第 39 关 fetch</h4><p><img src="/images/githug39.jpg" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git fetch</span><br><span class="line">git branch -r：查看远程分支</span><br><span class="line">git log remote-name&#x2F;branch-name：查看远程分支log</span><br></pre></td></tr></table></figure>
+
+<h4 id="第-40-关-rebase"><a href="#第-40-关-rebase" class="headerlink" title="第 40 关 rebase"></a>第 40 关 rebase</h4><p><img src="/images/githug40.jpg" alt=""><br>命令：git checkout feature、git rebase master 当前分支的 commit 会在最上面</p>
+<h4 id="第-41-关-rebase-onto"><a href="#第-41-关-rebase-onto" class="headerlink" title="第 41 关 rebase_onto"></a>第 41 关 rebase_onto</h4><p><img src="/images/githug41.jpg" alt=""><br>命令：git rebase –onto master wrong_branch</p>
+<h4 id="第-42-关-repack"><a href="#第-42-关-repack" class="headerlink" title="第 42 关 repack"></a>第 42 关 repack</h4><p><img src="/images/githug42.jpg" alt=""><br>.git 用来存放 Git 管理仓库要用到的文件<br>命令：ls .git/objects/、git repack -d（打包并删除作废的对象）</p>
+<h4 id="第-43-关-cherry-pick"><a href="#第-43-关-cherry-pick" class="headerlink" title="第 43 关 cherry-pick"></a>第 43 关 cherry-pick</h4><p><img src="/images/githug43.jpg" alt=""><br>命令：git cherry-pick hash-code 选取其中一条提交到主线</p>
+<h4 id="第-44-关-grep"><a href="#第-44-关-grep" class="headerlink" title="第 44 关 grep"></a>第 44 关 grep</h4><p><img src="/images/githug44.jpg" alt=""><br>命令：git grep keyword (file-name) 在当前项目/指定文件中查找关键词</p>
+<h4 id="第-45-关-rename-commit"><a href="#第-45-关-rename-commit" class="headerlink" title="第 45 关 rename_commit"></a>第 45 关 rename_commit</h4><p><img src="/images/githug45.jpg" alt=""><br>命令：git rebase -i 前一条 hash-code、reword</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pick：执行此次提交</span><br><span class="line">reword：执行此次提交，但要修改备注内容</span><br><span class="line">squash：合并此次提交</span><br><span class="line">drop：删除此次提交</span><br></pre></td></tr></table></figure>
+
+<h4 id="第-46-关-squash"><a href="#第-46-关-squash" class="headerlink" title="第 46 关 squash"></a>第 46 关 squash</h4><p><img src="/images/githug46.jpg" alt=""><br>命令：git rebase -i 前一条 hash-code、squash</p>
+<h4 id="第-47-关-merge-squash"><a href="#第-47-关-merge-squash" class="headerlink" title="第 47 关 merge_squash"></a>第 47 关 merge_squash</h4><p><img src="/images/githug47.jpg" alt=""><br>命令：git merge branch-name –squash</p>
+<h4 id="第-48-关-reorder"><a href="#第-48-关-reorder" class="headerlink" title="第 48 关 reorder"></a>第 48 关 reorder</h4><p><img src="/images/githug48.jpg" alt=""><br>命令：git rebase -i 前一条 hash-code、调整顺序</p>
+<h4 id="第-49-关-bisect"><a href="#第-49-关-bisect" class="headerlink" title="第 49 关 bisect"></a>第 49 关 bisect</h4><p><img src="/images/githug49.jpg" alt=""><br><img src="/images/githug_bisect.jpg" alt=""></p>
+<h4 id="第-50-关-stage-lines"><a href="#第-50-关-stage-lines" class="headerlink" title="第 50 关 stage_lines"></a>第 50 关 stage_lines</h4><p><img src="/images/githug50.jpg" alt=""><br>命令：git add file-name –edit</p>
+<h4 id="第-51-关-find-old-branch"><a href="#第-51-关-find-old-branch" class="headerlink" title="第 51 关 find_old_branch"></a>第 51 关 find_old_branch</h4><p><img src="/images/githug51.jpg" alt=""><br>命令：git reflog 可以查看在 git 上的历史操作</p>
+<h4 id="第-52-关-revert"><a href="#第-52-关-revert" class="headerlink" title="第 52 关 revert"></a>第 52 关 revert</h4><p><img src="/images/githug52.jpg" alt=""><br>命令：git revert bad-hash-code (–no-edit)自动生成一个提交信息</p>
+<h4 id="第-53-关-restore"><a href="#第-53-关-restore" class="headerlink" title="第 53 关 restore"></a>第 53 关 restore</h4><p><img src="/images/githug53.jpg" alt=""><br>命令：git reflog、git reset –hard hash-code</p>
+<h4 id="第-54-关-reflict"><a href="#第-54-关-reflict" class="headerlink" title="第 54 关 reflict"></a>第 54 关 reflict</h4><p><img src="/images/githug54.jpg" alt=""><br>命令：git merge branch-name、</p>
+<h4 id="第-55-关-submodule"><a href="#第-55-关-submodule" class="headerlink" title="第 55 关 submodule"></a>第 55 关 submodule</h4><p><img src="/images/githug55.jpg" alt=""><br>命令：git submodule add module-url</p>
+<h4 id="第-56-关-contribute"><a href="#第-56-关-contribute" class="headerlink" title="第 56 关 contribute"></a>第 56 关 contribute</h4><p><img src="/images/githug56.jpg" alt=""><br>恭喜通关！！！</p>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    
+                    <li class="next">
+                        <a href="/2020/10/20/git版本控制/" data-toggle="tooltip" data-placement="top"
+                           title="git版本控制">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+
+
+                <!--加入新的评论系统-->
+                
+
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Githug-安装和使用方法"><span class="toc-text">Githug 安装和使用方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#通关咯"><span class="toc-text">通关咯</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#第-1-关-init"><span class="toc-text">第 1 关 init</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第-2-关-config"><span class="toc-text">第 2 关 config</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第-3-关-add"><span class="toc-text">第 3 关 add</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第-4-关-commit"><span class="toc-text">第 4 关 commit</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第-5-关-clone"><span class="toc-text">第 5 关 clone</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第-6-关-clone-to-folder"><span class="toc-text">第 6 关 clone to folder</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第-7-关-ignore"><span class="toc-text">第 7 关 ignore</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第-8-关-include"><span class="toc-text">第 8 关 include</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第-9-关-status"><span class="toc-text">第 9 关 status</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第-10-关-number-of-files-committed"><span class="toc-text">第 10 关 number_of_files_committed</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第-11-关-rm"><span class="toc-text">第 11 关 rm</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第-12-关-rm-cached"><span class="toc-text">第 12 关 rm_cached</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第-13-关-stash"><span class="toc-text">第 13 关 stash</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第-14-关-rename"><span class="toc-text">第 14 关 rename</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第-15-关-restructure"><span class="toc-text">第 15 关 restructure</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第-16-关-log"><span class="toc-text">第 16 关 log</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第-17-关-tag"><span class="toc-text">第 17 关 tag</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第-18-关-push-tags"><span class="toc-text">第 18 关 push_tags</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第-19-关-commit-amend"><span class="toc-text">第 19 关 commit_amend</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第-20-关-commit-in-future"><span class="toc-text">第 20 关 commit_in_future</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第-21-关-reset"><span class="toc-text">第 21 关 reset</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第-22-关-reset-soft"><span class="toc-text">第 22 关 reset soft</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第-23-关-checkout-file"><span class="toc-text">第 23 关 checkout file</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第-24-关-remote"><span class="toc-text">第 24 关 remote</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第-25-关-remote-url"><span class="toc-text">第 25 关 remote_url</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第-26-关-pull"><span class="toc-text">第 26 关 pull</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第-27-关-remote-add"><span class="toc-text">第 27 关 remote_add</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第-28-关-push"><span class="toc-text">第 28 关 push</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第-29-关-diff"><span class="toc-text">第 29 关 diff</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第-30-关-blame"><span class="toc-text">第 30 关 blame</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第-31-关-branch"><span class="toc-text">第 31 关 branch</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第-32-关-checkout"><span class="toc-text">第 32 关 checkout</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第-33-关-checkout-tag"><span class="toc-text">第 33 关 checkout_tag</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第-34-关-checkout-tag-over-branch"><span class="toc-text">第 34 关 checkout_tag_over_branch</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第-35-关-branch-at"><span class="toc-text">第 35 关 branch_at</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第-36-关-delete-branch"><span class="toc-text">第 36 关 delete_branch</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第-37-关-push-branch"><span class="toc-text">第 37 关 push_branch</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第-38-关-merge"><span class="toc-text">第 38 关 merge</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第-39-关-fetch"><span class="toc-text">第 39 关 fetch</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第-40-关-rebase"><span class="toc-text">第 40 关 rebase</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第-41-关-rebase-onto"><span class="toc-text">第 41 关 rebase_onto</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第-42-关-repack"><span class="toc-text">第 42 关 repack</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第-43-关-cherry-pick"><span class="toc-text">第 43 关 cherry-pick</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第-44-关-grep"><span class="toc-text">第 44 关 grep</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第-45-关-rename-commit"><span class="toc-text">第 45 关 rename_commit</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第-46-关-squash"><span class="toc-text">第 46 关 squash</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第-47-关-merge-squash"><span class="toc-text">第 47 关 merge_squash</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第-48-关-reorder"><span class="toc-text">第 48 关 reorder</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第-49-关-bisect"><span class="toc-text">第 49 关 bisect</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第-50-关-stage-lines"><span class="toc-text">第 50 关 stage_lines</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第-51-关-find-old-branch"><span class="toc-text">第 51 关 find_old_branch</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第-52-关-revert"><span class="toc-text">第 52 关 revert</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第-53-关-restore"><span class="toc-text">第 53 关 restore</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第-54-关-reflict"><span class="toc-text">第 54 关 reflict</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第-55-关-submodule"><span class="toc-text">第 55 关 submodule</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第-56-关-contribute"><span class="toc-text">第 56 关 contribute</span></a></li></ol></li></ol></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/zhufenfen">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; zhufen 2020
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/" target="_blank" rel="noopener">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+
+<script src="/js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="/js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="/js/blog.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://yoursite.com/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','','2.0.0');
+</script>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="https://static.smxs.com/uploads/allimg/181017/15-1Q01G14Q9222.jpg">
+</body>
+
+</html>
