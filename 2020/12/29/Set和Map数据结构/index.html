@@ -173,7 +173,7 @@
         <div class="row">
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <p>相信大家都知道Set类似于数组，Map类似于对象，但这两种数据结构的意义何在，可能就有些说不上来了，但它们又看起来很重要的样子，那么下面就跟随我一起来细细了解下这几种数据结构吧。</p>
+                <p>相信大家都知道Set类似于数组，Map类似于对象，但这两种数据结构的意义何在，可能就有些说不上来了，但它们看起来又很不平凡的样子，那么下面就跟随我一起来细细了解下这几种数据结构吧。</p>
 <h2 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h2><p>类似于数组，成员唯一。接受一个数组（或者具有iterable接口的其他数据结构）作为参数，可以去重，去重方法类似于精确相等运算符===，主要区别在于Set加入值时认为NaN等于自身。</p>
 <h3 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h3><ul>
 <li>Set.prototype.constructor：构造函数，默认就是Set函数</li>
@@ -238,7 +238,8 @@
 
 </li>
 </ol>
-<p>WeakMap可用于防止内存泄漏，但比较难演示，因为无法观察里面的引用会自动消失。如果引用占用特别多的内存，就可以通过Node的process.memoryUsage方法看出来。首先打开Node命令行：<br><img src="/images/weakMap1.jpg" alt=""><br>–expose-gc表示允许手动执行垃圾回收机制<br><img src="/images/weakMap2.jpg" alt=""><br>查看内存占用初始状态<br><img src="/images/weakMap3.jpg" alt=""><br>数组被引用了两次<br><img src="/images/weakMap4.jpg" alt=""><br>此时，清除变量key对数组的引用，但没有清除WeakMap但键名对数组的引用，再次执行垃圾回收，会发现WeakMap键名没有阻止gc对内存的回收。看来外部的引用消失，WeakMap内部的引用，就会自动被垃圾回收清除。Chrome浏览器的Memory面板的垃圾桶按钮，可以强制进行垃圾回收，这个按钮也可用来观察WeakMap内部引用是否消失。</p>
+<p>WeakMap可用于防止内存泄漏，但比较难演示，因为无法观察里面的引用会自动消失。如果引用占用特别多的内存，就可以通过Node的process.memoryUsage方法看出来。首先打开Node命令行：<br><img src="/images/weakMap1.jpg" alt=""><br>–expose-gc表示允许手动执行垃圾回收机制<br><img src="/images/weakMap2.jpg" alt=""><br>查看内存占用初始状态<br><img src="/images/weakMap3.jpg" alt=""><br>数组被引用了两次<br><img src="/images/weakMap4.jpg" alt=""><br>此时，清除变量key对数组的引用，但没有清除WeakMap的键名对数组的引用，再次执行垃圾回收，会发现WeakMap键名没有阻止gc对内存的回收。看来外部的引用消失，WeakMap内部的引用，就会自动被垃圾回收清除。Chrome浏览器的Memory面板的垃圾桶按钮，可以强制进行垃圾回收，这个按钮也可用来观察WeakMap内部引用是否消失。</p>
+<p>以上只是了解了Set和Map的数据结构，知道了相关用法用途，但还未深入，感兴趣的同学可以手动实现下Set和Map数据结构。</p>
 
                 <hr>
                 
@@ -411,7 +412,7 @@
 <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
 <!--wechat title img-->
-<img class="wechat-title-img" src="https://static.smxs.com/uploads/allimg/181017/15-1Q01G14Q9222.jpg">
+<img class="wechat-title-img" src="https://tvax3.sinaimg.cn/crop.0.0.996.996.180/c0710f2bly8gdirvw3xryj20ro0rot9t.jpg?KID=imgbed,tva&amp;Expires=1609233305&amp;ssig=n1KU%2FAadQ4">
 </body>
 
 </html>
