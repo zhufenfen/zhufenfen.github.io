@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="zhufenfen taiben">
+    <meta name="keyword" content="">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
+    <link rel="alternate" type="application/atom+xml" title="zhufen" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        useEffect详解｜zhufen&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://yoursite.com/2021/05/14/useEffect详解/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+
+    <!-- Custom CSS -->
+    
+<link rel="stylesheet" href="/css/blog-style.css">
+
+
+    <!-- Pygments Github CSS -->
+    
+<link rel="stylesheet" href="/css/syntax.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    zhufen
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="undefinedhttps://images.pexels.com/photos/7818815/pexels-photo-7818815.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('https://images.pexels.com/photos/7818815/pexels-photo-7818815.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260undefined')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>useEffect详解</h1>
+                    
+                    <span class="meta">
+                         作者 zhufenfen
+                        <span>
+                          日期 2021-05-14
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            useEffect详解
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <p>从前觉得useEffect是一个好用且好理解的Hook，可在项目引入了react-hooks/exhaustive-deps lint规则的时候，我发现自己的很多useEffect都报lint错误，当时的想法就是突破规则不能让它压制了我用useEffect的多样性。后来某一天代码被公之于众，这就让我不得不反思我对useEffect的理解问题了。<br><img src="/images/useEffect1.png" width=256 height=256 /><br>我发觉自己在问类似的问题：</p>
+<ul>
+<li>为什么有时候effect拿到的是旧的state或props</li>
+<li>为什么有时候我想要实现的业务和eslint相冲突，真正的用法是怎样的？</li>
+</ul>
+<p>花费一些时间过了遍useEffect<a href="https://zh-hans.reactjs.org/docs/hooks-effect.html" target="_blank" rel="noopener">官方文档</a>和Dan的<a href="https://overreacted.io/zh-hans/a-complete-guide-to-useeffect/#swimming-against-the-tide" target="_blank" rel="noopener">useEffect完整指南</a>，算是揭开了useEffect的真面目～当我不再透过熟悉的class生命周期方法去窥探useEffect这个Hook的时候，我才得以融会贯通<br><img src="http://wx4.sinaimg.cn/large/bf976b12gy1gibjy1uhlvg207s06wwes.gif" alt=""><br><em>“忘记你已经学到的”</em></p>
+<h2 id="每一次渲染都有它自己的state、props、事件处理函数、Effects"><a href="#每一次渲染都有它自己的state、props、事件处理函数、Effects" class="headerlink" title="每一次渲染都有它自己的state、props、事件处理函数、Effects"></a>每一次渲染都有它自己的state、props、事件处理函数、Effects</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">function Counter() &#123;</span><br><span class="line">  const [count, setCount] &#x3D; useState(0);</span><br><span class="line">  const handleAlertClick &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">    setTimeout(() &#x3D;&gt; &#123;</span><br><span class="line">      alert(count);</span><br><span class="line">    &#125;, 3000);</span><br><span class="line">  &#125;;</span><br><span class="line">  useEffect(() &#x3D;&gt; &#123;</span><br><span class="line">    document.title &#x3D; &#96;you clicked $&#123;count&#125; times&#96;;</span><br><span class="line">    setTimeout(() &#x3D;&gt; &#123;</span><br><span class="line">      console.log(count);</span><br><span class="line">    &#125;, 3000);</span><br><span class="line">  &#125;);</span><br><span class="line">  return (</span><br><span class="line">    &lt;&gt;</span><br><span class="line">      &lt;p&gt;you clicked &#123;count&#125; times&lt;&#x2F;p&gt;</span><br><span class="line">      &lt;button onClick&#x3D;&#123;() &#x3D;&gt; setCount(count + 1)&#125;&gt;click me&lt;&#x2F;button&gt;</span><br><span class="line">      &lt;button onClick&#x3D;&#123;handleAlertClick&#125;&gt;show alert&lt;&#x2F;button&gt;</span><br><span class="line">    &lt;&#x2F;&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>React会记住你提供的effect函数，并且会在每次更改作用于DOM并让浏览器绘制屏幕后去调用它。你可以想象，effect是渲染结果的一部分。渲染过程：</p>
+<ul>
+<li>React：给我状态为0时的UI</li>
+<li>组件：给你需要渲染的jsx，渲染完成之后记得调用effect</li>
+<li>React：没问题，开始更新UI。喂，浏览器，我要改下DOM</li>
+<li>浏览器：酷，我已经绘制屏幕上了</li>
+<li>React：好，开始运行effect<br>点击之后</li>
+<li>组件：把我的状态设置为1</li>
+<li>…<br>得出结论：<strong>组件内的每一个函数（事件处理函数、effects、定时器、API调用）会捕获定义它们那次渲染中的props和state。</strong></li>
+</ul>
+<h3 id="清理时机"><a href="#清理时机" class="headerlink" title="清理时机"></a>清理时机</h3><p>有些effects可能需要一个清理步骤，它的目的是消除副作用，比如取消订阅。思考下面的代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 假设第一次渲染props是&#123;id: 10&#125;，第二次渲染props是&#123;id: 20&#125;</span><br><span class="line">useEffect(() &#x3D;&gt; &#123;</span><br><span class="line">  ChatAPI.subscribeToFriendStatus(props.id, handleStatusChange);</span><br><span class="line">  return () &#x3D;&gt; &#123;</span><br><span class="line">    ChatAPI.unsubscribeFromFriendStatus(props.id, handleStatusChange);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>你可能会认为，清除过程看到的是旧的props因为它是在重新渲染之前运行，不过这并不精确，让我们来一探究竟。React只会在浏览器绘制后运行effects，这使你的应用更流畅因为大多数effects并不会阻塞屏幕更新，effect的清除同样被延迟了，上一次的effect会在重新渲染后被清除！</p>
+<ul>
+<li>React渲染{id: 20}的UI</li>
+<li>浏览器绘制，我们看到{id: 20}的UI</li>
+<li>React清除{id: 10}的effect（引用上述结论）</li>
+<li>React运行{id: 20}的effect</li>
+</ul>
+<h2 id="如何读取未来的state和props"><a href="#如何读取未来的state和props" class="headerlink" title="如何读取未来的state和props"></a>如何读取未来的state和props</h2><p>有时候我想在effect中拿到最新的值而不是那次渲染中定义的值，最简单的方法的就是使用refs。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">function Counter() &#123;</span><br><span class="line">  const [count, setCount] &#x3D; useState(0);</span><br><span class="line">  const latestCount &#x3D; useRef();</span><br><span class="line">  useEffect(() &#x3D;&gt; &#123;</span><br><span class="line">    latestCount.current &#x3D; count;</span><br><span class="line">    setTimeout(() &#x3D;&gt; &#123;</span><br><span class="line">      console.log(latestCount.current);</span><br><span class="line">    &#125;, 3000);</span><br><span class="line">  &#125;);</span><br><span class="line">  return (</span><br><span class="line">    &lt;&gt;</span><br><span class="line">      &lt;p&gt;you clicked &#123;count&#125; times&lt;&#x2F;p&gt;</span><br><span class="line">      &lt;button onClick&#x3D;&#123;() &#x3D;&gt; setCount(count + 1)&#125;&gt;click me&lt;&#x2F;button&gt;</span><br><span class="line">    &lt;&#x2F;&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>它不是默认行为，而是你主动选择去这样做。</p>
+<h2 id="关于依赖项不要对React撒谎"><a href="#关于依赖项不要对React撒谎" class="headerlink" title="关于依赖项不要对React撒谎"></a>关于依赖项不要对React撒谎</h2><p>为了避免effects不必要的重复调用，可以提供给useEffect一个依赖数组参数。这好比你告诉React：嘿，我知道你看不到这个函数里的东西，但我可以保证只使用了渲染中的[依赖数组参数]。如果设置了依赖项，effects中用到的所有组件内的值都要包含在依赖项中，包括props、state、函数…</p>
+<p>但我曾经试图违反这个规则，因为我只想在挂载的时候运行它。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">function SearchResults() &#123;</span><br><span class="line">  async function fetchData() &#123;</span><br><span class="line">    &#x2F;&#x2F; ...</span><br><span class="line">  &#125;</span><br><span class="line">  useEffect(() &#x3D;&gt; &#123;</span><br><span class="line">    fetchData();</span><br><span class="line">  &#125;, []);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果盲目把函数放在依赖项里，可能会遇到无限请求的问题，在我们深入解决方案之前，我们先更好的理解问题。</p>
+<h3 id="如果设置了错误的依赖会怎么样呢"><a href="#如果设置了错误的依赖会怎么样呢" class="headerlink" title="如果设置了错误的依赖会怎么样呢"></a>如果设置了错误的依赖会怎么样呢</h3><p>如果你的心智模型是：只有当我想重新触发effect的时候才需要设置依赖。这个例子会让你产生危机，你想触发一次并且这是个定时器，但为什么会有问题？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">const [count, setCount] &#x3D; useState(0);</span><br><span class="line">useEffect(() &#x3D;&gt; &#123;</span><br><span class="line">  const timer &#x3D; setInterval(() &#x3D;&gt; &#123;</span><br><span class="line">    setCount(count + 1);</span><br><span class="line">  &#125;, 1000);</span><br><span class="line">  return () &#x3D;&gt; clearInterval(timer);</span><br><span class="line">&#125;, []);</span><br></pre></td></tr></table></figure>
+<p>在第一次渲染中count是0，setCount(0 + 1)，如果不设置依赖的话，effect不会重新运行，后面每一次都是在调用setCount(0 + 1)。类似这样的问题是很难想到的，所以关于依赖不要对React撒谎。</p>
+<h3 id="两种诚实告知依赖的方法"><a href="#两种诚实告知依赖的方法" class="headerlink" title="两种诚实告知依赖的方法"></a>两种诚实告知依赖的方法</h3><ul>
+<li>在依赖中包含所有effect中用到的组件内的值</li>
+</ul>
+<p>让我们在依赖中包含count，这能解决问题，但是定时器会在每次count改变后清除和重新创建。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">const [count, setCount] &#x3D; useState(0);</span><br><span class="line">useEffect(() &#x3D;&gt; &#123;</span><br><span class="line">  const timer &#x3D; setInterval(() &#x3D;&gt; &#123;</span><br><span class="line">    setCount(count + 1);</span><br><span class="line">  &#125;, 1000);</span><br><span class="line">  return () &#x3D;&gt; clearInterval(timer);</span><br><span class="line">&#125;, [count]);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>修改effect内部代码确保它包含的值只会在需要的时候发生变更</li>
+</ul>
+<p>下面来看一些移除依赖的常用技巧</p>
+<h2 id="移除依赖"><a href="#移除依赖" class="headerlink" title="移除依赖"></a>移除依赖</h2><h3 id="让effects自给自足"><a href="#让effects自给自足" class="headerlink" title="让effects自给自足"></a>让effects自给自足</h3><p>我们想去掉effect的count依赖，为了实现这个目的，需要问自己一个问题：我们为什么要用count？可以看到我们在setCount中用到了count，在这个场景中，我们其实并不需要在effect中使用count。当想要根据前一个状态更新状态的时候，我们可以使用setState的函数形式。因为我们需要告知React的仅仅是递增状态，不管它现在具体是什么值。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">const [count, setCount] &#x3D; useState(0);</span><br><span class="line">useEffect(() &#x3D;&gt; &#123;</span><br><span class="line">  const timer &#x3D; setInterval(() &#x3D;&gt; &#123;</span><br><span class="line">    setCount(c &#x3D;&gt; c + 1);</span><br><span class="line">  &#125;, 1000);</span><br><span class="line">  return () &#x3D;&gt; clearInterval(timer);</span><br><span class="line">&#125;, []);</span><br></pre></td></tr></table></figure>
+<p>尽管effect只调用了一次，第一次渲染的定时器回调函数会在每次触发时给React发送c =&gt; c + 1更新指令，它不再需要知道当前的count值，因为React已经知道了。当我们想基于一个prop来计算下一次的state，它并不能做到，幸运的是，setCount(c =&gt; c + 1)有一个更强大的姐妹模式，它的名字叫useReducer。</p>
+<h3 id="解耦来自Actions的更新"><a href="#解耦来自Actions的更新" class="headerlink" title="解耦来自Actions的更新"></a>解耦来自Actions的更新</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">const [count, setCount] &#x3D; useState(0);</span><br><span class="line">const [step, setStep] &#x3D; useState(1);</span><br><span class="line">useEffect(() &#x3D;&gt; &#123;</span><br><span class="line">  const timer &#x3D; setInterval(() &#x3D;&gt; &#123;</span><br><span class="line">    setCount(c &#x3D;&gt; c + step);</span><br><span class="line">  &#125;, 1000);</span><br><span class="line">  return () &#x3D;&gt; clearInterval(timer);</span><br><span class="line">&#125;, [step]);</span><br><span class="line">return (</span><br><span class="line">  &lt;&gt;</span><br><span class="line">    &lt;p&gt;&#123;count&#125;&lt;&#x2F;p&gt;</span><br><span class="line">    &lt;input value&#x3D;&#123;step&#125; onChange&#x3D;&#123;(e) &#x3D;&gt; setStep(Number(e.target.value))&#125; &#x2F;&gt;</span><br><span class="line">  &lt;&#x2F;&gt;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>如果我们不想在step更新后重启定时器，我们该如何从effect中移除对step的依赖呢？当你想更新一个状态，并且这个状态更新依赖另一个状态的值时，你可能需要用useReducer去替换它们。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">function reducer(state, action) &#123;</span><br><span class="line">  const &#123; count, step &#125; &#x3D; state;</span><br><span class="line">  if (action.type &#x3D;&#x3D;&#x3D; &#39;tick&#39;) &#123;</span><br><span class="line">    return &#123; count: count + step, step &#125;;</span><br><span class="line">  &#125; else if (action.type &#x3D;&#x3D;&#x3D; &#39;step&#39;) &#123;</span><br><span class="line">    return &#123; count, step: action.step &#125;;</span><br><span class="line">  &#125; else &#123;</span><br><span class="line">    throw new Error();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">const initialState &#x3D; &#123;</span><br><span class="line">  count: 0,</span><br><span class="line">  step: 1,</span><br><span class="line">&#125;;</span><br><span class="line">export default function Counter() &#123;</span><br><span class="line">  const [state, dispatch] &#x3D; useReducer(reducer, initialState);</span><br><span class="line">  const &#123; count, step &#125; &#x3D; state;</span><br><span class="line">  useEffect(() &#x3D;&gt; &#123;</span><br><span class="line">    const timer &#x3D; setInterval(() &#x3D;&gt; &#123;</span><br><span class="line">      dispatch(&#123; type: &#39;tick&#39; &#125;);</span><br><span class="line">    &#125;, 1000);</span><br><span class="line">    return () &#x3D;&gt; clearInterval(timer);</span><br><span class="line">  &#125;, [step]);</span><br><span class="line">  return (</span><br><span class="line">    &lt;&gt;</span><br><span class="line">      &lt;p&gt;&#123;count&#125;&lt;&#x2F;p&gt;</span><br><span class="line">      &lt;input</span><br><span class="line">        value&#x3D;&#123;step&#125;</span><br><span class="line">        onChange&#x3D;&#123;(e) &#x3D;&gt; &#123;</span><br><span class="line">          dispatch(&#123; type: &#39;step&#39;, step: Number(e.target.value) &#125;);</span><br><span class="line">        &#125;&#125;</span><br><span class="line">      &#x2F;&gt;</span><br><span class="line">    &lt;&#x2F;&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果step是prop的话，我们可以把reducer函数放到组件内去读取prop。我们解决了问题！effect负责告诉我们发生了什么，更新逻辑交由reducer去统一处理，这可以帮助我们移除不必要的依赖。你可能会疑惑，在之前渲染中调用的reducer怎么知道新的prop？答案是当你dispatch的时候，React只是记住了action，它会在下次渲染中调用reducer，而且调用reducer也不是在effect里。</p>
+<h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">function SearchResults() &#123;</span><br><span class="line">  async function fetchData() &#123;</span><br><span class="line">    &#x2F;&#x2F; ...</span><br><span class="line">  &#125;</span><br><span class="line">  useEffect(() &#x3D;&gt; &#123;</span><br><span class="line">    fetchData();</span><br><span class="line">  &#125;, []);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的代码可以正常工作，在组件日渐复杂的迭代流程中我们很难确保它在各种情况下还能正常运行。如果某些函数仅在effect中调用，我们可以把它移到effect中，就不用考虑间接依赖了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">useEffect(() &#x3D;&gt; &#123;</span><br><span class="line">  function getFetchUrl() &#123;</span><br><span class="line">    return &#39;https:&#x2F;&#x2F;hn.algolia.com&#x2F;api&#x2F;v1&#x2F;search?query&#x3D;&#39; + query;</span><br><span class="line">  &#125;</span><br><span class="line">  async function fetchData() &#123;</span><br><span class="line">    const result &#x3D; await axios(getFetchUrl());</span><br><span class="line">    setData(result.data);</span><br><span class="line">  &#125;</span><br><span class="line">  fetchData();</span><br><span class="line">&#125;, [query]);</span><br></pre></td></tr></table></figure>
+<p>有时候函数会在不同地方被重复调用，我们不想把它移到effect中了。由于在组件内定义的函数每次渲染都会变，我们有两个解决方案。</p>
+<ul>
+<li>函数没有使用组件内的任何值，可以提到组件外面去定义<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">async function fetchData() &#123;</span><br><span class="line">  &#x2F;&#x2F; ...</span><br><span class="line">&#125;</span><br><span class="line">function SearchResults() &#123;</span><br><span class="line">  useEffect(() &#x3D;&gt; &#123;</span><br><span class="line">    fetchData();</span><br><span class="line">  &#125;, []);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>函数被useCallback包装，使函数在需要的时候才会变。通过属性从父组件传入的函数也同样适用这个方法。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">const fetchData &#x3D; useCallback(() &#x3D;&gt; &#123;</span><br><span class="line">  &#x2F;&#x2F; ...</span><br><span class="line">&#125;, []);</span><br><span class="line">useEffect(() &#x3D;&gt; &#123;</span><br><span class="line">  fetchData();</span><br><span class="line">&#125;, [fetchData]);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>当然，到处使用useCallback是件很笨拙的事情，当我们需要把函数传递下去且函数会在子组件的effect中被调用时，useCallback是很好的技巧且非常有用。</p>
+<h3 id="函数是数据流的一部分么"><a href="#函数是数据流的一部分么" class="headerlink" title="函数是数据流的一部分么"></a>函数是数据流的一部分么</h3><p>有趣的是，这种模式在class组件中行不通，并且这种行不通恰当好处揭示了effect和生命周期之间的区别。考虑下面的转换：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">class Parent extends Component &#123;</span><br><span class="line">  state &#x3D; &#123;</span><br><span class="line">    query: &#39;react&#39;</span><br><span class="line">  &#125;;</span><br><span class="line">  fetchData &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">    const url &#x3D; &#39;https:&#x2F;&#x2F;hn.algolia.com&#x2F;api&#x2F;v1&#x2F;search?query&#x3D;&#39; + this.state.query;</span><br><span class="line">    &#x2F;&#x2F; ... Fetch data and do something ...</span><br><span class="line">  &#125;;</span><br><span class="line">  render() &#123;</span><br><span class="line">    return &lt;Child fetchData&#x3D;&#123;this.fetchData&#125; query&#x3D;&#123;this.state.query&#125; &#x2F;&gt;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">class Child extends Component &#123;</span><br><span class="line">  componentDidMount() &#123;</span><br><span class="line">    this.props.fetchData();</span><br><span class="line">  &#125;</span><br><span class="line">  componentDidUpdate(prevProps) &#123;</span><br><span class="line">    &#x2F;&#x2F; props.fetchData始终等于fetchData</span><br><span class="line">    &lt;!-- if (this.props.fetchData !&#x3D;&#x3D; prevProps.fetchData) &#123;</span><br><span class="line">      this.props.fetchData();</span><br><span class="line">    &#125; --&gt;</span><br><span class="line">    if (this.props.query !&#x3D;&#x3D; prevProps.query) &#123;</span><br><span class="line">      this.props.fetchData();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在class组件中，函数属性本身并不是数据流的一部分。而在hooks中，使用useCallback，函数完全可以参与到数据流中。</p>
+<p>通过对useEffect重新理解和认识，规范使用useEffect志在必得！</p>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    
+                    <li class="next">
+                        <a href="/2021/01/26/Proxy代理/" data-toggle="tooltip" data-placement="top"
+                           title="Proxy代理">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+
+
+                <!--加入新的评论系统-->
+                
+
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#每一次渲染都有它自己的state、props、事件处理函数、Effects"><span class="toc-text">每一次渲染都有它自己的state、props、事件处理函数、Effects</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#清理时机"><span class="toc-text">清理时机</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#如何读取未来的state和props"><span class="toc-text">如何读取未来的state和props</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关于依赖项不要对React撒谎"><span class="toc-text">关于依赖项不要对React撒谎</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#如果设置了错误的依赖会怎么样呢"><span class="toc-text">如果设置了错误的依赖会怎么样呢</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#两种诚实告知依赖的方法"><span class="toc-text">两种诚实告知依赖的方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#移除依赖"><span class="toc-text">移除依赖</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#让effects自给自足"><span class="toc-text">让effects自给自足</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#解耦来自Actions的更新"><span class="toc-text">解耦来自Actions的更新</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#函数"><span class="toc-text">函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#函数是数据流的一部分么"><span class="toc-text">函数是数据流的一部分么</span></a></li></ol></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/zhufenfen">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; zhufen 2021
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/" target="_blank" rel="noopener">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+
+<script src="/js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="/js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="/js/blog.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://yoursite.com/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','','2.0.0');
+</script>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="https://tvax3.sinaimg.cn/crop.0.0.996.996.180/c0710f2bly8gdirvw3xryj20ro0rot9t.jpg?KID=imgbed,tva&amp;Expires=1609233305&amp;ssig=n1KU%2FAadQ4">
+</body>
+
+</html>
