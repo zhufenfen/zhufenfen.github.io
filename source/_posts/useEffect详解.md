@@ -11,7 +11,7 @@ header-img: https://images.pexels.com/photos/7818815/pexels-photo-7818815.jpeg?a
 - 为什么有时候我想要实现的业务和eslint相冲突，真正的用法是怎样的？
 
 花费一些时间过了遍useEffect[官方文档](https://zh-hans.reactjs.org/docs/hooks-effect.html)和Dan的[useEffect完整指南](https://overreacted.io/zh-hans/a-complete-guide-to-useeffect/#swimming-against-the-tide)，算是揭开了useEffect的真面目～当我不再透过熟悉的class生命周期方法去窥探useEffect这个Hook的时候，我才得以融会贯通
-![](http://wx4.sinaimg.cn/large/bf976b12gy1gibjy1uhlvg207s06wwes.gif)
+<img src="/images/useEffect2.gif" width=256 height=256 />
 *“忘记你已经学到的”*
 
 ## 每一次渲染都有它自己的state、props、事件处理函数、Effects
