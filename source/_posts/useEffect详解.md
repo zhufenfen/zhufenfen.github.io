@@ -190,7 +190,7 @@ export default function Counter() {
       dispatch({ type: 'tick' });
     }, 1000);
     return () => clearInterval(timer);
-  }, [step]);
+  }, [dispatch]);
   return (
     <>
       <p>{count}</p>
