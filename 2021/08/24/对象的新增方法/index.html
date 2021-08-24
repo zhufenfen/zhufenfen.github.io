@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="zhufenfen taiben">
+    <meta name="keyword" content="">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
+    <link rel="alternate" type="application/atom+xml" title="zhufen" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        对象的新增方法｜zhufen&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://yoursite.com/2021/08/24/对象的新增方法/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+
+    <!-- Custom CSS -->
+    
+<link rel="stylesheet" href="/css/blog-style.css">
+
+
+    <!-- Pygments Github CSS -->
+    
+<link rel="stylesheet" href="/css/syntax.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    zhufen
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="undefinedhttps://images.pexels.com/photos/8124913/pexels-photo-8124913.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('https://images.pexels.com/photos/8124913/pexels-photo-8124913.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500undefined')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>对象的新增方法</h1>
+                    
+                    <span class="meta">
+                         作者 zhufenfen
+                        <span>
+                          日期 2021-08-24
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            对象的新增方法
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <p>本篇博客记录了Object对象的新增方法。</p>
+<h1 id="Object-is"><a href="#Object-is" class="headerlink" title="Object.is()"></a>Object.is()</h1><p>ES5比较两个值是否相等，有两个运算符。==会自动转换数据类型，===的NaN不等于自身以及+0等于-0。Object.is与严格比较运算符的行为基本一致。不同之处只有两个：</p>
+<ol>
+<li>+0不等于-0</li>
+<li>NaN等于自身</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; ES5部署Object.is</span><br><span class="line">Object.defineProperty(Object, &#39;is&#39;, &#123;</span><br><span class="line">  value: function(a, b) &#123;</span><br><span class="line">    if (a &#x3D;&#x3D;&#x3D; b) &#123;</span><br><span class="line">      return a !&#x3D;&#x3D; 0 || 1 &#x2F; x &#x3D;&#x3D;&#x3D; 1 &#x2F; y &#x2F;&#x2F; 判断是否为零以及为零时正负情况</span><br><span class="line">    &#125;</span><br><span class="line">    return a !&#x3D;&#x3D; a &amp;&amp; b !&#x3D;&#x3D; b</span><br><span class="line">  &#125;,</span><br><span class="line">  enumerable: false,</span><br><span class="line">  configurable: true,</span><br><span class="line">  writable: true</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h1 id="Object-assign"><a href="#Object-assign" class="headerlink" title="Object.assign()"></a>Object.assign()</h1><p>Object.assign(target, source1, source2)将源对象的所有可枚举属性复制到目标对象（浅拷贝）。数值、布尔值、字符串会转成对应的包装对象，原始值会在包装对象的内部属性[[PrimitiveValue]]上面，只有字符串会产生可枚举的实义属性。null和undefined无法转成对象，不能用作首参数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Object(true) &#x2F;&#x2F; &#123;[[PrimitiveValue]]: true&#125;</span><br><span class="line">Object(1) &#x2F;&#x2F; &#123;[[PrimitiveValue]]: 1&#125;</span><br><span class="line">Object(&#39;a&#39;) &#x2F;&#x2F; &#123;[[PrimitiveValue]]: &#39;a&#39;, 0: &#39;a&#39;, length: 1&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 如果要复制的是一个取值函数，则将求值后再复制</span><br><span class="line">var source &#x3D; &#123;</span><br><span class="line">  get foo() &#123; return 1 &#125;</span><br><span class="line">&#125;</span><br><span class="line">var target &#x3D; &#123;&#125;</span><br><span class="line">Object.assign(target, source) &#x2F;&#x2F; &#123; foo: 1 &#125;</span><br></pre></td></tr></table></figure>
+<p><strong>用途</strong></p>
+<ul>
+<li>为对象添加属性<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">class Point &#123;</span><br><span class="line">  constructor(x, y) &#123;</span><br><span class="line">    Object.assign(this, &#123;x, y&#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>为对象添加方法<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Object.assign(SomeClass.prototype, &#123;</span><br><span class="line">  someMethod(arg1) &#123;&#125;,</span><br><span class="line">  anotherMethod() &#123;&#125;</span><br><span class="line">&#125;)</span><br><span class="line">&#x2F;&#x2F; 等同于</span><br><span class="line">SomeClass.prototype.someMethod &#x3D; function (arg1) &#123;&#125;</span><br><span class="line">SomeClass.prototype.anotherMethod &#x3D; function () &#123;&#125;</span><br></pre></td></tr></table></figure></li>
+<li>克隆对象<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var newObj &#x3D; Object.assign(&#123;&#125;, obj)</span><br><span class="line"></span><br><span class="line">var newObj &#x3D; Object.assign(Object.create(Object.getPrototypeOf(obj)), obj)</span><br></pre></td></tr></table></figure></li>
+<li>合并多个对象<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const merge &#x3D; (target, ...sources) &#x3D;&gt; Object.assign(target, ...sources)</span><br></pre></td></tr></table></figure></li>
+<li>为属性指定默认值<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Object.assign(&#123;&#125;, DEFAULTS, options)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h1 id="Object-getOwnPropertyDescriptors"><a href="#Object-getOwnPropertyDescriptors" class="headerlink" title="Object.getOwnPropertyDescriptors()"></a>Object.getOwnPropertyDescriptors()</h1><p>返回指定对象所有自身属性的描述对象</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">function getOwnPropertyDescriptors(obj) &#123;</span><br><span class="line">  var result &#x3D; &#123;&#125;</span><br><span class="line">  for(var key of Reflect.ownKeys(obj)) &#123;</span><br><span class="line">    result[key] &#x3D; Object.getOwnPropertyDescriptor(obj, key)</span><br><span class="line">  &#125;</span><br><span class="line">  return result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>引入目的是解决Object.assign()无法正确拷贝get和set属性的问题。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const shallowMerge &#x3D; (target, source) &#x3D;&gt; Object.defineProperties(target, Object.getOwnPropertyDescriptors(source))</span><br></pre></td></tr></table></figure>
+<p>克隆对象</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const shallowClone &#x3D; (obj) &#x3D;&gt; Object.create(Object.getPrototypeOf(obj), Object.getOwnPropertyDescriptors(obj))</span><br></pre></td></tr></table></figure>
+<p>Mixin混入模式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">let mix &#x3D; (obj) &#x3D;&gt; (&#123;</span><br><span class="line">  with: (...mixins) &#x3D;&gt; mixins.reduce((sum, mixin) &#x3D;&gt; Object.create(sum, Object.getOwnPropertyDescriptors(mixin)), obj)</span><br><span class="line">&#125;)</span><br><span class="line">let a &#x3D; &#123;a: &#39;a&#39;&#125;</span><br><span class="line">let b &#x3D; &#123;b: &#39;b&#39;&#125;</span><br><span class="line">let c &#x3D; &#123;c: &#39;c&#39;&#125;</span><br><span class="line">let d &#x3D; mix(a).with(b, c)</span><br></pre></td></tr></table></figure>
+
+<h1 id="proto属性，Object-setPrototypeOf-，Object-getPrototypeOf"><a href="#proto属性，Object-setPrototypeOf-，Object-getPrototypeOf" class="headerlink" title="proto属性，Object.setPrototypeOf()，Object.getPrototypeOf()"></a><strong>proto</strong>属性，Object.setPrototypeOf()，Object.getPrototypeOf()</h1><p>只有浏览器才部署__proto__属性，所以最好不要使用</p>
+<h2 id="proto"><a href="#proto" class="headerlink" title="__proto__"></a>__proto__</h2><p>用来读取或设置当前对象的原型对象</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; ES5写法</span><br><span class="line">var obj &#x3D; &#123;</span><br><span class="line">  method: function() &#123;...&#125;</span><br><span class="line">&#125;</span><br><span class="line">obj.__proto__ &#x3D; someOtherObj</span><br><span class="line">&#x2F;&#x2F; ES6写法</span><br><span class="line">var obj &#x3D; Object.create(someOtherObj)</span><br><span class="line">obj.method &#x3D; function() &#123;...&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Object-setPrototypeOf-Object-getPrototypeOf"><a href="#Object-setPrototypeOf-Object-getPrototypeOf" class="headerlink" title="Object.setPrototypeOf() Object.getPrototypeOf()"></a>Object.setPrototypeOf() Object.getPrototypeOf()</h2><p>null或undefined用作第一个参数会报错</p>
+<h1 id="Object-keys-，Object-values-，Object-entries"><a href="#Object-keys-，Object-values-，Object-entries" class="headerlink" title="Object.keys()，Object.values()，Object.entries()"></a>Object.keys()，Object.values()，Object.entries()</h1><p>对象自身可遍历属性的键名/键值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 过滤属性名为Symbol值的属性</span><br><span class="line">var obj &#x3D; &#123;a: 1, b: 2, [Symbol()]: 3&#125;</span><br><span class="line">for(var [key, value] of Object.entries(obj)) &#123;</span><br><span class="line">  console.log([key, value]) &#x2F;&#x2F; [&#39;a&#39;, 1] [&#39;b&#39;, 2]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 转成真正的Map结构</span><br><span class="line">new Map(Object.entries(&#123;a: 1&#125;)) &#x2F;&#x2F; Map &#123;&quot;a&quot; &#x3D;&gt; 1&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Object-fromEntries"><a href="#Object-fromEntries" class="headerlink" title="Object.fromEntries()"></a>Object.fromEntries()</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; Object.entries的逆操作</span><br><span class="line">Object.fromEntries([[&#39;a&#39;, 1], [&#39;b&#39;, 2]]) &#x2F;&#x2F; &#123;a: 1, b: 2&#125;</span><br><span class="line">&#x2F;&#x2F; map结构转成对象</span><br><span class="line">var map &#x3D; new Map([[&#39;a&#39;, 1], [&#39;b&#39;, 2]]);</span><br><span class="line">Object.fromEntries(map) &#x2F;&#x2F; &#123;a: 1, b: 2&#125;</span><br><span class="line">&#x2F;&#x2F; 查询字符串转成对象</span><br><span class="line">Object.fromEntries(new URLSearchParams(&#39;a&#x3D;1&amp;b&#x3D;2&#39;)) &#x2F;&#x2F; &#123;a: 1, b: 2&#125;</span><br></pre></td></tr></table></figure>
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    
+                    <li class="next">
+                        <a href="/2021/07/27/对象的扩展/" data-toggle="tooltip" data-placement="top"
+                           title="对象的扩展">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+
+
+                <!--加入新的评论系统-->
+                
+
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Object-is"><span class="toc-text">Object.is()</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Object-assign"><span class="toc-text">Object.assign()</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Object-getOwnPropertyDescriptors"><span class="toc-text">Object.getOwnPropertyDescriptors()</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#proto属性，Object-setPrototypeOf-，Object-getPrototypeOf"><span class="toc-text">proto属性，Object.setPrototypeOf()，Object.getPrototypeOf()</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#proto"><span class="toc-text">__proto__</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Object-setPrototypeOf-Object-getPrototypeOf"><span class="toc-text">Object.setPrototypeOf() Object.getPrototypeOf()</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Object-keys-，Object-values-，Object-entries"><span class="toc-text">Object.keys()，Object.values()，Object.entries()</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Object-fromEntries"><span class="toc-text">Object.fromEntries()</span></a></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/zhufenfen">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; zhufen 2021
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/" target="_blank" rel="noopener">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+
+<script src="/js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="/js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="/js/blog.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://yoursite.com/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','','2.0.0');
+</script>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="https://tvax3.sinaimg.cn/crop.0.0.996.996.180/c0710f2bly8gdirvw3xryj20ro0rot9t.jpg?KID=imgbed,tva&amp;Expires=1609233305&amp;ssig=n1KU%2FAadQ4">
+</body>
+
+</html>
