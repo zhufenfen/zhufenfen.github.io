@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="zhufenfen taiben">
+    <meta name="keyword" content="">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
+    <link rel="alternate" type="application/atom+xml" title="zhufen" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        动态规划｜zhufen&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://yoursite.com/2021/06/29/动态规划/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+
+    <!-- Custom CSS -->
+    
+<link rel="stylesheet" href="/css/blog-style.css">
+
+
+    <!-- Pygments Github CSS -->
+    
+<link rel="stylesheet" href="/css/syntax.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    zhufen
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="undefinedhttps://images.pexels.com/photos/7697684/pexels-photo-7697684.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('https://images.pexels.com/photos/7697684/pexels-photo-7697684.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260undefined')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>动态规划</h1>
+                    
+                    <span class="meta">
+                         作者 zhufenfen
+                        <span>
+                          日期 2021-06-29
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            动态规划
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <p>每当大家谈起动态规划这个词，不明觉厉。想趁着这次技术分享的机会，了解下动态规划到底是什么小天使。</p>
+<h1 id="动态规划概念"><a href="#动态规划概念" class="headerlink" title="动态规划概念"></a>动态规划概念</h1><p>动态规划（英语：Dynamic programming，简称 DP）是一种在数学、管理科学、计算机科学、经济学和生物信息学中使用的，通过把原问题分解为相对简单的子问题的方式求解复杂问题的方法。</p>
+<p>它不是某一种具体的算法，而是一种算法思想：若要解一个给定问题，我们需要解其不同部分（即子问题），再根据子问题的解以得出原问题的解。</p>
+<p>应用这种算法思想解决问题的可行性，对子问题与原问题的关系，以及子问题之间的关系这两方面有一些要求，它们分别对应了<strong>最优子结构</strong>和<strong>重复子问题</strong>。</p>
+<h2 id="最优子结构"><a href="#最优子结构" class="headerlink" title="最优子结构"></a>最优子结构</h2><p><em>最优子结构规定的是子问题与原问题的关系</em></p>
+<p>动态规划要解决的都是一些问题的最优解，即从很多解决方案中找出最优的一个。当我们在求一个问题最优解的时候，我们可以把这些问题分解成多个子问题，然后递归地找到每个子问题的最优解，最后通过一定的数学方法对各个子问题的最优解进行组合得到最终的结果。总结来说就是一个问题的最优解是由它的各个子问题的最优解决定的。看图说话：<br><img src="/images/dp1.png" alt=""></p>
+<p>将子问题的解进行组合可以得到原问题的解是动态规划可行性的关键，在解题中一般用状态转移方程描述这种组合。</p>
+<p>例如原问题的解为f(n)，fn(n)也叫状态，不同选择可能对应不同的子问题或不同的组合方式。例如n = 2k和n - 2k+1对应了原问题n上的不同选择，分别对应了不同的子问题和组合方式。找到了最优子结构，也就能推导出一个状态转移方程f(n)，通过状态转移方程，我们也能很快的写出问题的解法。<br><img src="/images/dp2.png" width=396/></p>
+<h2 id="重复子问题"><a href="#重复子问题" class="headerlink" title="重复子问题"></a>重复子问题</h2><p><em>重复子问题规定的是子问题与子问题的关系</em></p>
+<p>当我们在递归寻找每个子问题的最优解的时候，有可能会遇到一些更小的子问题，而且这些子问题会重叠的出现在子问题里，出现这样的情况，会有很多重复的计算。动态规划可以保证每个重复的子问题只会被求解一次。当重复的问题很多时，动态规划可以减少很多重复的计算。如果没有出现重复子问题，就没必要用动态规划，直接普通递归就可以。</p>
+<p>例如斐波那契的动态转移方程是f(n) = f(n - 1) + f(n - 2)。在求f(5)时，需要先求子问题f(4)和f(3)，得到结果后再组合成原问题f(5)的解。递归地求f(4)时，又要先求子问题f(3)和f(2)，这里的f(3)与求f(5)时的子问题重复了。<br><img src="/images/dp3.png" width=396/></p>
+<p><strong>动态规划核心：找出子问题以及子问题与原问题之间的关系</strong></p>
+<p>找到了子问题以及子问题与原问题的关系，就能递归地求解子问题了。但重叠的子问题使得直接递归会多很多重复的计算，于是就想到记忆化递归法：若能事先确定子问题的范围就可以建表存储子问题的答案</p>
+<p>以上是动态规划的概念，但到了做题环节，还是摸不着头脑，不知道如何下手。动态规划无疑就是利用历史记录，来避免我们的重复计算。而这些历史记录，我们得需要一些变量来保存，一般是用一维和二维数组来保存。下面我们先来讲下动态规划题很重要的三个步骤。</p>
+<h1 id="动态规划解题步骤"><a href="#动态规划解题步骤" class="headerlink" title="动态规划解题步骤"></a>动态规划解题步骤</h1><p><strong>第一步骤：定义数组元素的含义。</strong> 上面说了，我们会用一个数组，来保存历史数据。假设定义一个一维数组dp，那dp[n]代表什么意思呢</p>
+<p><strong>第二步骤：找出数组元素之间的关系式。</strong>当我们要计算dp[n]，是可以利用历史数据dp[n-1]，dp[n-2]，，，dp[1]来推出新的元素值，例如dp[n] = dp[n-1] + dp[n-2]。这个就是他们的关系式了，而这一步，也是最难的一步。后面我会讲几种类型的题来说。</p>
+<p><strong>第三步骤：找出初始值。</strong>我们知道了数组元素之间的关系式，例如dp = dp[n-1]+dp[n-2]，但我们需要知道初始值，因为一直往前推的话，会有dp[3] = dp[2] + dp[1]，而dp[2]和dp[1]不能再分解，所以我们需要直接获得dp[2]和dp[1]的值，而这就是所谓的初始值。</p>
+<p>有了初始值，以及数组元素之间的表达式，我们就可以求出dp[n]，而dp[n]的含义是由你来定义的，你想求什么，你就定义它是什么。这样，这道题就解出来了。</p>
+<p>如果上面听的不太懂的话，没事，我会按照这个步骤给大家讲解两道例题。</p>
+<h1 id="案例讲解"><a href="#案例讲解" class="headerlink" title="案例讲解"></a>案例讲解</h1><h2 id="三步问题"><a href="#三步问题" class="headerlink" title="三步问题"></a>三步问题</h2><p>题目描述：有个小孩正在上楼梯，楼梯有n阶台阶，小孩一次可以上1阶、2阶或3阶。实现一种方法，计算小孩有多少种上楼梯的方式。结果可能很大，你需要对结果模1000000007。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">示例1：输入n &#x3D; 3</span><br><span class="line">那上3阶台阶的话，有多少种上楼梯的方式呢，我们来枚举下：</span><br><span class="line">1、先上1阶，再上1阶，再上1阶</span><br><span class="line">2、先上1阶，再上2阶</span><br><span class="line">3、先上2阶，再上1阶</span><br><span class="line">4、先上3阶</span><br><span class="line">输出：4</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">示例2：输入n &#x3D; 5</span><br><span class="line">那上5阶台阶的话，有多少种上楼梯的方式呢。</span><br><span class="line">1、先上1阶，再上1阶，再上1阶，再上1阶，再上1阶</span><br><span class="line">2、先上1阶，再上2阶，再上2阶</span><br><span class="line">3、先上2阶，再上3阶</span><br><span class="line">...就不一一枚举了</span><br><span class="line">输出：13</span><br></pre></td></tr></table></figure>
+<p>这道题怎么解呢？按这个步骤来吧</p>
+<p><strong>第一步骤：定义数组元素的含义。</strong>我们的问题是小孩上n阶台阶有多少种上法，那我们就定义dp[n]：这个小孩上n阶台阶总共有dp[n]种上法</p>
+<p><strong>第二步骤：找出数组元素之间的关系式。</strong>动态规划的题，是把规模较大的问题分成规模较小的问题，然后由小的问题推导出大的问题。dp[n]的规模是n，比它规模小的是n-1，n-2，n-2，也就是说，dp[n]一定会和dp[n-1]，dp[n-2]…存在某种关系的。我们要找出他们的关系。对于这道题，由于小孩一次可以上1阶、2阶、3阶，所以上n阶台阶总共有3种方式，一种是从第n-1阶跳上来，另一种是从第n-2阶跳上来，最后一种是从第n-3阶跳上来。得出关系式：dp[n] = dp[n-1] + dp[n-2] + dp[n-3]</p>
+<p><strong>第三步骤：找出初始值。</strong>由于数组下标不能是负数，所以我们给出初始值dp[0]，dp[1]，dp[2]，dp[3]</p>
+<p>具体代码实现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;**</span><br><span class="line"> * @param &#123;number&#125; n</span><br><span class="line"> * @return &#123;number&#125;</span><br><span class="line"> *&#x2F;</span><br><span class="line">var waysToStep &#x3D; function(n) &#123;</span><br><span class="line">    var dp &#x3D; new Array(n);</span><br><span class="line">    dp[0] &#x3D; 0;</span><br><span class="line">    dp[1] &#x3D; 1;</span><br><span class="line">    dp[2] &#x3D; 2;</span><br><span class="line">    dp[3] &#x3D; 4;</span><br><span class="line">    for(var j &#x3D; 4; j &lt;&#x3D; n; j++) &#123;</span><br><span class="line">        dp[j] &#x3D; (dp[j - 1] + dp[j - 2] + dp[j - 3]) % 1000000007; </span><br><span class="line">    &#125;</span><br><span class="line">    return dp[n];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="不同路径"><a href="#不同路径" class="headerlink" title="不同路径"></a>不同路径</h2><p>题目描述：一个机器人位于一个 m x n 网格的左上角 （起始点在下图中标记为 “Start” ）。机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为 “Finish” ）。问总共有多少条不同的路径？<br><img src="/images/dp4.png" width=512/></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">示例输入：m &#x3D;3, n &#x3D; 2</span><br><span class="line">从左上角开始，总共有3条路径可以到达右下角。</span><br><span class="line">1、向右 —&gt; 向右 —&gt; 向下</span><br><span class="line">2、向下 —&gt; 向右 —&gt; 向右</span><br><span class="line">3、向右 —&gt; 向下 —&gt; 向右</span><br><span class="line">输出：3</span><br></pre></td></tr></table></figure>
+<p>还是老样子，三个步骤来解决。</p>
+<p><strong>第一步骤：定义数组元素的含义。</strong>我们的问题是从左上角到右下角一共有多少种路径，那我们就定义dp[i][j]：当机器人从左上角走到（i, j）这个位置时，一共有dp[i][j]种路径。那么dp[m - 1][n - 1]就是我们要的答案了。</p>
+<p><strong>第二步骤：找出数组元素之间的关系式。</strong>想象一下机器人怎么才能到达（i, j）这个位置，由于机器人只能向下或者向右走，所以有两种方式，一种是从（i-1, j）这个位置走一步到达，一种是从（i, j-1）这个位置走一步到达</p>
+<p><strong>第三步骤：找出初始值。</strong>由于数组下标不能是负数，所以我们给出最上边一行和最左边一列的初始值dp[0…m-1][0] = 1、dp[0][0…n-1] = 1</p>
+<p>具体代码实现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;**</span><br><span class="line"> * @param &#123;number&#125; m</span><br><span class="line"> * @param &#123;number&#125; n</span><br><span class="line"> * @return &#123;number&#125;</span><br><span class="line"> *&#x2F;</span><br><span class="line">var uniquePaths &#x3D; function(m, n) &#123;</span><br><span class="line">    var dp &#x3D; new Array(m).fill(0);</span><br><span class="line">    dp &#x3D; dp.map(item &#x3D;&gt; new Array(n).fill(0));</span><br><span class="line">    &#x2F;&#x2F; 初始值，最上面一排只能一直往右走</span><br><span class="line">    for (var a &#x3D; 0; a &lt; m; a++) &#123;</span><br><span class="line">        dp[a][0] &#x3D; 1;</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F; 初始值，最左边一排只能一直往下走</span><br><span class="line">    for (var b &#x3D; 0; b &lt; n; b++) &#123;</span><br><span class="line">        dp[0][b] &#x3D; 1;</span><br><span class="line">    &#125;</span><br><span class="line">    for (var i &#x3D; 1; i &lt; m; i++) &#123;</span><br><span class="line">        for (var j &#x3D; 1; j &lt; n; j++) &#123;</span><br><span class="line">            dp[i][j] &#x3D; dp [i-1][j] + dp[i][j-1];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return dp[m-1][n-1];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>以上两道题都是不怎么难的入门题。而动态规划远比我想象中复杂的多，需要慢慢持续学习。不如我们来看下它的类别。<br><img src="/images/dp5.png" alt=""><br>感兴趣的同学可以按照这个类别深入研究～</p>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2021/07/27/对象的扩展/" data-toggle="tooltip" data-placement="top"
+                           title="对象的扩展">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2021/05/14/useEffect详解/" data-toggle="tooltip" data-placement="top"
+                           title="useEffect详解">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+
+
+                <!--加入新的评论系统-->
+                
+
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#动态规划概念"><span class="toc-text">动态规划概念</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#最优子结构"><span class="toc-text">最优子结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#重复子问题"><span class="toc-text">重复子问题</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#动态规划解题步骤"><span class="toc-text">动态规划解题步骤</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#案例讲解"><span class="toc-text">案例讲解</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#三步问题"><span class="toc-text">三步问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#不同路径"><span class="toc-text">不同路径</span></a></li></ol></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/zhufenfen">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; zhufen 2023
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/" target="_blank" rel="noopener">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+
+<script src="/js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="/js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="/js/blog.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://yoursite.com/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','','2.0.0');
+</script>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="https://tvax3.sinaimg.cn/crop.0.0.996.996.180/c0710f2bly8gdirvw3xryj20ro0rot9t.jpg?KID=imgbed,tva&amp;Expires=1609233305&amp;ssig=n1KU%2FAadQ4">
+</body>
+
+</html>
